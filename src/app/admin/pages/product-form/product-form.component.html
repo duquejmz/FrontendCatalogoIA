@@ -1,0 +1,42 @@
+<div class="product-form-container">
+  <!-- Header -->
+  <div class="form-header">
+    <div class="header-content">
+      <h1>{{ isEditMode ? 'Editar Producto' : 'Crear Producto' }}</h1>
+      <p>{{ isEditMode ? 'Modifica la información del producto' : 'Completa los datos del nuevo producto' }}</p>
+    </div>
+    <button class="back-button" (click)="onCancel()">
+      ← Volver a productos
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="form-content">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>{{ isEditMode ? 'Cargando producto...' : 'Guardando producto...' }}</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="error-state">
+      <h3>Error</h3>
+      <p>{{ error }}</p>
+      <button (click)="reloadProduct()" class="retry-button" *ngIf="isEditMode">
+        Reintentar
+      </button>
+      <button (click)="onCancel()" class="back-button-alt">
+        Volver a productos
+      </button>
+    </div>
+
+    <!-- Product Form -->
+    <div *ngIf="product && !isLoading && !error" class="form-wrapper">
+      <app-admin-product-form
+        [product]="product"
+        (save)="onSaveProduct($event)"
+        (cancel)="onCancel()">
+      </app-admin-product-form>
+    </div>
+  </div>
+</div>

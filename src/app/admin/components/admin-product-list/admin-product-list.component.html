@@ -1,0 +1,60 @@
+<div class="admin-product-list">
+  <div class="list-header">
+    <h2>Gestión de Productos</h2>
+    <button class="btn-primary" routerLink="/admin/products/new">
+      Nuevo Producto
+    </button>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <p>Cargando productos...</p>
+  </div>
+
+  <div class="products-table" *ngIf="!loading && products.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>SKU</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>
+            <img [src]="product.images?.[0]?.url || '/assets/placeholder.jpg'" 
+                 [alt]="product.name"
+                 class="product-thumbnail">
+          </td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.name }}</td>
+          <td>${{ product.price }}</td>
+          <td>
+            <span class="status-badge" 
+                  [class.active]="product.isActive" 
+                  [class.inactive]="!product.isActive">
+              {{ product.isActive ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button class="btn-edit" (click)="onEdit(product)">Editar</button>
+            <button class="btn-toggle" (click)="onToggle(product)">
+              {{ product.isActive ? 'Desactivar' : 'Activar' }}
+            </button>
+            <button class="btn-delete" (click)="onDelete(product)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && products.length === 0">
+    <p>No hay productos registrados</p>
+    <button class="btn-primary" routerLink="/admin/products/new">
+      Crear primer producto
+    </button>
+  </div>
+</div>

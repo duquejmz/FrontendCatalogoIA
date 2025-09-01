@@ -1,0 +1,108 @@
+<div class="admin-product-form">
+  <div class="form-header">
+    <h2>{{ isEditing ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="sku">SKU *</label>
+        <input 
+          id="sku"
+          type="text" 
+          formControlName="sku"
+          [class.error]="getFieldError('sku')"
+          placeholder="Ingrese el SKU del producto">
+        <div class="error-message" *ngIf="getFieldError('sku')">
+          {{ getFieldError('sku') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Nombre *</label>
+        <input 
+          id="name"
+          type="text" 
+          formControlName="name"
+          [class.error]="getFieldError('name')"
+          placeholder="Nombre del producto">
+        <div class="error-message" *ngIf="getFieldError('name')">
+          {{ getFieldError('name') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Precio *</label>
+        <input 
+          id="price"
+          type="number" 
+          formControlName="price"
+          [class.error]="getFieldError('price')"
+          placeholder="0.00"
+          step="0.01">
+        <div class="error-message" *ngIf="getFieldError('price')">
+          {{ getFieldError('price') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="categoryId">Categoría</label>
+        <select id="categoryId" formControlName="categoryId">
+          <option value="">Seleccione una categoría</option>
+          <!-- Opciones de categorías se cargarán dinámicamente -->
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group full-width">
+      <label for="description">Descripción</label>
+      <textarea 
+        id="description"
+        formControlName="description"
+        rows="4"
+        placeholder="Descripción del producto"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" formControlName="isActive">
+        <span>Producto activo</span>
+      </label>
+    </div>
+
+    <div class="image-upload-section">
+      <h3>Imágenes del Producto</h3>
+      <div class="image-uploader">
+        <input 
+          type="file" 
+          multiple 
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          id="imageUpload"
+          class="file-input">
+        <label for="imageUpload" class="upload-label">
+          <span>Seleccionar imágenes</span>
+        </label>
+      </div>
+      
+      <div class="current-images" *ngIf="product && product.images && product.images.length > 0">
+        <h4>Imágenes actuales:</h4>
+        <div class="images-grid">
+          <div *ngFor="let image of product.images" class="image-item">
+            <img [src]="image.url" [alt]="image.altText || product.name">
+            <button type="button" class="remove-image">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" (click)="onCancel()">
+        Cancelar
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="productForm.invalid">
+        {{ isEditing ? 'Actualizar' : 'Crear' }} Producto
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<div class="detail-container">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <button (click)="goBack()" class="back-button">
+      ← Volver al catálogo
+    </button>
+  </nav>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Cargando producto...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-state">
+    <h2>Error</h2>
+    <p>{{ error }}</p>
+    <button (click)="reloadProduct()" class="retry-button">Reintentar</button>
+    <button (click)="goBack()" class="back-button-alt">Volver al catálogo</button>
+  </div>
+
+  <!-- Product Detail -->
+  <div *ngIf="product && !isLoading && !error" class="product-detail-wrapper">
+    <app-product-detail [product]="product"></app-product-detail>
+  </div>
+</div>

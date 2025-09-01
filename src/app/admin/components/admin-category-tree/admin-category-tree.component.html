@@ -1,0 +1,51 @@
+<div class="category-tree">
+  <div class="tree-header">
+    <h3>Árbol de Categorías</h3>
+    <button class="btn-primary" type="button">Nueva Categoría</button>
+  </div>
+
+  <div class="tree-container">
+    <div class="category-node" *ngFor="let category of categories">
+      <div class="node-content">
+        <div class="node-info">
+          <button 
+            *ngIf="category.children && category.children.length > 0"
+            class="expand-btn"
+            (click)="toggleNode(category.id)"
+            [class.expanded]="isExpanded(category.id)">
+            ▶
+          </button>
+          <span class="category-name">{{ category.name }}</span>
+          <span class="status-badge" 
+                [class.active]="category.isActive" 
+                [class.inactive]="!category.isActive">
+            {{ category.isActive ? 'Activa' : 'Inactiva' }}
+          </span>
+        </div>
+        
+        <div class="node-actions">
+          <button class="btn-edit" (click)="onEdit(category)">Editar</button>
+          <button class="btn-toggle" (click)="onToggle(category)">
+            {{ category.isActive ? 'Desactivar' : 'Activar' }}
+          </button>
+          <button class="btn-delete" (click)="onDelete(category)">Eliminar</button>
+        </div>
+      </div>
+
+      <div class="children-container" 
+           *ngIf="category.children && category.children.length > 0 && isExpanded(category.id)">
+        <app-admin-category-tree 
+          [categories]="category.children"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+          (toggle)="onToggle($event)">
+        </app-admin-category-tree>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="categories.length === 0">
+    <p>No hay categorías registradas</p>
+    <button class="btn-primary">Crear primera categoría</button>
+  </div>
+</div>

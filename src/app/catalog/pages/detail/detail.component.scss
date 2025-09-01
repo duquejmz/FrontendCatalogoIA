@@ -1,0 +1,147 @@
+.detail-container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+
+  .back-button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      background: #5a67d8;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.loading-state {
+  text-align: center;
+  padding: 100px 20px;
+
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 30px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.2rem;
+  }
+}
+
+.error-state {
+  text-align: center;
+  padding: 100px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    color: #e74c3c;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .retry-button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 15px;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #c0392b;
+    }
+  }
+
+  .back-button-alt {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #5a6268;
+    }
+  }
+}
+
+.product-detail-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 15px;
+  }
+
+  .breadcrumb {
+    margin-bottom: 20px;
+
+    .back-button {
+      padding: 10px 16px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .loading-state,
+  .error-state {
+    padding: 60px 15px;
+  }
+
+  .error-state {
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    .retry-button,
+    .back-button-alt {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+}

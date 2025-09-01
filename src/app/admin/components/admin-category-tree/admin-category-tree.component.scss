@@ -1,0 +1,152 @@
+.category-tree {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+
+  h3 {
+    margin: 0;
+    color: #111827;
+  }
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #1d4ed8;
+  }
+}
+
+.tree-container {
+  .category-node {
+    margin-bottom: 0.5rem;
+
+    .node-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: #f9fafb;
+
+      &:hover {
+        background: #f3f4f6;
+      }
+    }
+
+    .node-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .expand-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.75rem;
+        transition: transform 0.2s;
+
+        &.expanded {
+          transform: rotate(90deg);
+        }
+      }
+
+      .category-name {
+        font-weight: 500;
+        color: #111827;
+      }
+
+      .status-badge {
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+
+        &.active {
+          background-color: #dcfce7;
+          color: #166534;
+        }
+
+        &.inactive {
+          background-color: #fef2f2;
+          color: #dc2626;
+        }
+      }
+    }
+
+    .node-actions {
+      display: flex;
+      gap: 0.5rem;
+
+      button {
+        padding: 0.25rem 0.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .btn-edit {
+        background-color: #f59e0b;
+        color: white;
+
+        &:hover {
+          background-color: #d97706;
+        }
+      }
+
+      .btn-toggle {
+        background-color: #6b7280;
+        color: white;
+
+        &:hover {
+          background-color: #4b5563;
+        }
+      }
+
+      .btn-delete {
+        background-color: #dc2626;
+        color: white;
+
+        &:hover {
+          background-color: #b91c1c;
+        }
+      }
+    }
+
+    .children-container {
+      margin-left: 2rem;
+      margin-top: 0.5rem;
+      border-left: 2px solid #e5e7eb;
+      padding-left: 1rem;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+
+  .btn-primary {
+    margin-top: 1rem;
+  }
+}

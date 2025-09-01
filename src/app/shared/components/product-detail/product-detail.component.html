@@ -1,0 +1,39 @@
+<div class="product-detail-container" *ngIf="product">
+  <div class="product-gallery">
+    <div class="main-image">
+      <img [src]="selectedImage?.url || '/assets/placeholder.jpg'" 
+           [alt]="selectedImage?.altText || product.name"
+           class="main-product-image">
+    </div>
+    
+    <div class="thumbnail-gallery" *ngIf="product.images && product.images.length > 1">
+      <img *ngFor="let image of product.images; let i = index"
+           [src]="image.url"
+           [alt]="image.altText || product.name"
+           [class.active]="i === selectedImageIndex"
+           (click)="selectImage(i)"
+           class="thumbnail">
+    </div>
+  </div>
+  
+  <div class="product-info">
+    <h1>{{ product.name }}</h1>
+    <p class="product-sku">SKU: {{ product.sku }}</p>
+    <p class="product-price">${{ product.price }}</p>
+    
+    <div class="product-description" *ngIf="product.description">
+      <h3>Descripción</h3>
+      <p>{{ product.description }}</p>
+    </div>
+    
+    <div class="product-status">
+      <span class="status-badge" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+        {{ product.isActive ? 'Disponible' : 'No disponible' }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="loading-state" *ngIf="!product">
+  <p>Cargando producto...</p>
+</div>

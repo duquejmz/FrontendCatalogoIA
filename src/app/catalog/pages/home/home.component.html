@@ -1,0 +1,39 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Bienvenido al Catálogo IA</h1>
+      <p>Descubre los mejores productos tecnológicos con la mejor calidad y precios</p>
+      <a routerLink="/products" class="cta-button">Ver Catálogo Completo</a>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-section">
+    <h2>Productos Destacados</h2>
+    
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Cargando productos destacados...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="error-state">
+      <p>{{ error }}</p>
+      <button (click)="loadFeaturedProducts()" class="retry-button">Reintentar</button>
+    </div>
+
+    <!-- Products Grid -->
+    <app-product-grid 
+      *ngIf="!isLoading && !error && featuredProducts.length > 0"
+      [products]="featuredProducts"
+      [columns]="4">
+    </app-product-grid>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && !error && featuredProducts.length === 0" class="empty-state">
+      <p>No hay productos destacados disponibles</p>
+    </div>
+  </section>
+</div>

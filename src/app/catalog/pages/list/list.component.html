@@ -1,0 +1,81 @@
+<div class="list-container">
+  <div class="list-header">
+    <h1>Catálogo de Productos</h1>
+    <p>Encuentra el producto perfecto para ti</p>
+  </div>
+
+  <div class="list-content">
+    <!-- Filters Section -->
+    <aside class="filters-sidebar">
+      <app-product-filters
+        [categories]="categories"
+        (filtersChange)="onFiltersChange($event)"
+        (sortChange)="onSortChange($event)">
+      </app-product-filters>
+    </aside>
+
+    <!-- Products Section -->
+    <main class="products-main">
+      <!-- Results Info -->
+      <div class="results-info" *ngIf="!isLoading">
+        <p>
+          <span *ngIf="totalItems > 0">
+            Mostrando {{ (currentPage - 1) * pageSize + 1 }} - 
+            {{ Math.min(currentPage * pageSize, totalItems) }} de {{ totalItems }} productos
+          </span>
+          <span *ngIf="totalItems === 0">No se encontraron productos</span>
+        </p>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Cargando productos...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error && !isLoading" class="error-state">
+        <p>{{ error }}</p>
+        <button (click)="loadProducts()" class="retry-button">Reintentar</button>
+      </div>
+
+      <!-- Products Grid -->
+      <app-product-grid 
+        *ngIf="!isLoading && !error && products.length > 0"
+        [products]="products"
+        [columns]="3">
+      </app-product-grid>
+
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && !error && products.length === 0" class="empty-state">
+        <h3>No se encontraron productos</h3>
+        <p>Intenta ajustar los filtros de búsqueda</p>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="pagination" *ngIf="!isLoading && !error && totalPages > 1">
+        <button 
+          class="pagination-btn"
+          [disabled]="currentPage === 1"
+          (click)="onPageChange(currentPage - 1)">
+          Anterior
+        </button>
+
+        <button 
+          *ngFor="let page of pages"
+          class="pagination-btn"
+          [class.active]="page === currentPage"
+          (click)="onPageChange(page)">
+          {{ page }}
+        </button>
+
+        <button 
+          class="pagination-btn"
+          [disabled]="currentPage === totalPages"
+          (click)="onPageChange(currentPage + 1)">
+          Siguiente
+        </button>
+      </nav>
+    </main>
+  </div>
+</div>

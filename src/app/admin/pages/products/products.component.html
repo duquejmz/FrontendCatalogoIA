@@ -1,0 +1,60 @@
+<div class="products-container">
+  <div class="products-header">
+    <div class="header-content">
+      <h1>Gestión de Productos</h1>
+      <p>Administra el catálogo de productos</p>
+    </div>
+    <button class="create-button" (click)="onCreateProduct()">
+      + Crear Producto
+    </button>
+  </div>
+
+  <div class="products-content">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="error-state">
+      <p>{{ error }}</p>
+      <button (click)="loadProducts()" class="retry-button">Reintentar</button>
+    </div>
+
+    <!-- Products List -->
+    <div *ngIf="!isLoading && !error" class="products-list-wrapper">
+      <app-admin-product-list
+        [products]="products"
+        (edit)="onEditProduct($event)"
+        (toggle)="onToggleProduct($event)"
+        (delete)="onDeleteProduct($event)">
+      </app-admin-product-list>
+
+      <!-- Pagination -->
+      <nav class="pagination" *ngIf="totalPages > 1">
+        <button 
+          class="pagination-btn"
+          [disabled]="currentPage === 1"
+          (click)="onPageChange(currentPage - 1)">
+          Anterior
+        </button>
+
+        <button 
+          *ngFor="let page of pages"
+          class="pagination-btn"
+          [class.active]="page === currentPage"
+          (click)="onPageChange(page)">
+          {{ page }}
+        </button>
+
+        <button 
+          class="pagination-btn"
+          [disabled]="currentPage === totalPages"
+          (click)="onPageChange(currentPage + 1)">
+          Siguiente
+        </button>
+      </nav>
+    </div>
+  </div>
+</div>

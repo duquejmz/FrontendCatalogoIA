@@ -1,0 +1,44 @@
+<div class="categories-container">
+  <div class="categories-header">
+    <div class="header-content">
+      <h1>Gestión de Categorías</h1>
+      <p>Administra las categorías del catálogo en estructura jerárquica</p>
+    </div>
+    <button class="create-button" (click)="onCreateCategory()">
+      + Crear Categoría
+    </button>
+  </div>
+
+  <div class="categories-content">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Cargando categorías...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="error-state">
+      <p>{{ error }}</p>
+      <button (click)="loadCategories()" class="retry-button">Reintentar</button>
+    </div>
+
+    <!-- Categories Tree -->
+    <div *ngIf="!isLoading && !error" class="categories-tree-wrapper">
+      <app-admin-category-tree
+        [categories]="categories"
+        (edit)="onEditCategory($event)"
+        (delete)="onDeleteCategory($event)"
+        (toggle)="onToggleCategory($event)">
+      </app-admin-category-tree>
+
+      <!-- Empty State -->
+      <div *ngIf="categories.length === 0" class="empty-state">
+        <h3>No hay categorías</h3>
+        <p>Crea la primera categoría para comenzar</p>
+        <button (click)="onCreateCategory()" class="create-first-button">
+          Crear primera categoría
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="filters-container">
+  <form [formGroup]="filtersForm" class="filters-form">
+    <div class="search-section">
+      <input 
+        type="text" 
+        formControlName="search" 
+        placeholder="Buscar productos..."
+        (input)="onFiltersChange()"
+        class="search-input">
+    </div>
+    
+    <div class="filters-section">
+      <div class="filter-group">
+        <label>Categoría:</label>
+        <select formControlName="categoryId" (change)="onFiltersChange()">
+          <option value="">Todas las categorías</option>
+          <!-- Opciones de categorías se cargarán dinámicamente -->
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label>Precio mínimo:</label>
+        <input 
+          type="number" 
+          formControlName="minPrice" 
+          placeholder="0"
+          (input)="onFiltersChange()">
+      </div>
+      
+      <div class="filter-group">
+        <label>Precio máximo:</label>
+        <input 
+          type="number" 
+          formControlName="maxPrice" 
+          placeholder="1000"
+          (input)="onFiltersChange()">
+      </div>
+      
+      <div class="filter-group">
+        <label>Ordenar por:</label>
+        <select formControlName="sortBy" (change)="onSortChange()">
+          <option value="name">Nombre</option>
+          <option value="price">Precio</option>
+          <option value="createdAt">Fecha</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label>Dirección:</label>
+        <select formControlName="sortDirection" (change)="onSortChange()">
+          <option value="asc">Ascendente</option>
+          <option value="desc">Descendente</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
