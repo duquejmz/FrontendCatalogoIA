@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Product } from '../../../contracts';
-import { MockDataService } from '../../../shared/services/mock-data.service';
+import { ProductsService } from '../../../core/services/products.service';
+// import { MockDataService } from '../../../shared/services/mock-data.service';
 import { ProductGridComponent } from '../../../shared/components/product-grid/product-grid.component';
 
 @Component({
@@ -27,7 +28,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   private autoplayId: any = null;
 
-  constructor(private mockDataService: MockDataService) {}
+  constructor(
+    private productsService: ProductsService
+    // private mockDataService: MockDataService
+  ) {}
 
   ngOnInit(): void {
     this.loadFeaturedProducts();
@@ -42,7 +46,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = null;
 
-    this.mockDataService.getFeaturedProducts().subscribe({
+    // Backend connection (active)
+    this.productsService.getFeatured().subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getFeaturedProducts().subscribe({
       next: (products) => {
         this.featuredProducts = products;
         this.isLoading = false;

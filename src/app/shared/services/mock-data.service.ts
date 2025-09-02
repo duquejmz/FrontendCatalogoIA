@@ -252,18 +252,24 @@ export class MockDataService {
     return of(this.mockCategories).pipe(delay(400));
   }
 
+  
   // Simular login
   login(email: string, password: string): Observable<AuthTokens> {
-    // Simular validación básica
-    if (email === 'admin@catalogo.com' && password === 'admin123') {
-      const tokens: AuthTokens = {
-        accessToken: 'mock-jwt-token-' + Date.now(),
-        expiresIn: 3600
-      };
-      return of(tokens).pipe(delay(1000));
-    } else {
-      throw new Error('Credenciales inválidas');
-    }
+    return new Observable(observer => {
+      setTimeout(() => {
+        // Simular validación básica
+        if (email === 'admin@catalogo.com' && password === 'admin123') {
+          const tokens: AuthTokens = {
+            accessToken: 'mock-jwt-token-' + Date.now(),
+            expiresIn: 3600
+          };
+          observer.next(tokens);
+          observer.complete();
+        } else {
+          observer.error(new Error('Credenciales inválidas'));
+        }
+      }, 1000);
+    });
   }
 
   // Simular crear/actualizar producto

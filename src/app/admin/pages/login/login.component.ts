@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MockDataService } from '../../../shared/services/mock-data.service';
+// import { MockDataService } from '../../../shared/services/mock-data.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private mockDataService: MockDataService
+    private authService: AuthService
+    // private mockDataService: MockDataService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -50,17 +52,24 @@ export class LoginComponent implements OnInit {
 
       const { email, password } = this.loginForm.value;
 
-      this.mockDataService.login(email, password).subscribe({
+      // Backend connection (active)
+      this.authService.login(email, password).subscribe({
+      
+      // Mock connection (commented - uncomment to use mock)
+      // this.mockDataService.login(email, password).subscribe({
         next: (tokens) => {
-          // Store tokens in localStorage (in real app, use secure storage)
+          // Store tokens using AuthService
           localStorage.setItem('access_token', tokens.accessToken);
           localStorage.setItem('token_expires', (Date.now() + tokens.expiresIn * 1000).toString());
+          
+          // Update AuthService state
+          this.authService.setAuthenticationState(true);
           
           this.isLoading = false;
           this.router.navigate(['/admin/products']);
         },
         error: (err) => {
-          this.error = err.message || 'Error de autenticación';
+          this.error = err.message || 'Credenciales inválidas. Usa: admin@catalogo.com / admin123';
           this.isLoading = false;
         }
       });

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../../contracts';
-import { MockDataService } from '../../../shared/services/mock-data.service';
+import { ProductsService } from '../../../core/services/products.service';
+// import { MockDataService } from '../../../shared/services/mock-data.service';
 import { ProductDetailComponent } from '../../../shared/components/product-detail/product-detail.component';
 
 @Component({
@@ -21,7 +22,8 @@ export class DetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private mockDataService: MockDataService
+    private productsService: ProductsService
+    // private mockDataService: MockDataService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +43,11 @@ export class DetailComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    this.mockDataService.getProductById(id).subscribe({
+    // Backend connection (active)
+    this.productsService.getPublicById(id).subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getProductById(id).subscribe({
       next: (product) => {
         if (product) {
           this.product = product;

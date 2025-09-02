@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product, CategoryNode, PagedResult } from '../../../contracts';
-import { MockDataService } from '../../../shared/services/mock-data.service';
+import { ProductsService } from '../../../core/services/products.service';
+import { CategoriesService } from '../../../core/services/categories.service';
+// import { MockDataService } from '../../../shared/services/mock-data.service';
 import { ProductGridComponent } from '../../../shared/components/product-grid/product-grid.component';
 import { ProductFiltersComponent } from '../../../shared/components/product-filters/product-filters.component';
 
@@ -30,7 +32,9 @@ export class ListComponent implements OnInit {
   currentFilters: any = {};
 
   constructor(
-    private mockDataService: MockDataService,
+    private productsService: ProductsService,
+    private categoriesService: CategoriesService,
+    // private mockDataService: MockDataService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -41,7 +45,11 @@ export class ListComponent implements OnInit {
   }
 
   private loadCategories(): void {
-    this.mockDataService.getPublicCategories().subscribe({
+    // Backend connection (active)
+    this.categoriesService.listPublic().subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getPublicCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
       },
@@ -55,7 +63,11 @@ export class ListComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    this.mockDataService.getProducts(this.currentPage, this.pageSize, this.currentFilters).subscribe({
+    // Backend connection (active)
+    this.productsService.getPublicList(this.currentPage, this.pageSize, this.currentFilters).subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getProducts(this.currentPage, this.pageSize, this.currentFilters).subscribe({
       next: (result: PagedResult<Product>) => {
         this.products = result.items;
         this.totalItems = result.total;

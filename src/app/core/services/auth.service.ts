@@ -10,7 +10,7 @@ import { environment } from '../../../environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly TOKEN_KEY = 'auth_token';
+  private readonly TOKEN_KEY = 'access_token';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasValidToken());
 
   constructor(
@@ -19,11 +19,14 @@ export class AuthService {
   ) {}
 
   login(email: string, password: string): Observable<AuthTokens> {
-    return this.http.post<AuthTokens>(`${environment.apiBaseUrl}/api/v1/auth/login`, {
+    return this.http.post<AuthTokens>(`${environment.apiBaseUrl}/auth/login`, {
       email,
       password
     }).pipe(
       tap(tokens => {
+        console.log(tokens);
+        console.log(email, password);
+        
         this.setToken(tokens.accessToken);
         this.isAuthenticatedSubject.next(true);
       })
@@ -58,6 +61,11 @@ export class AuthService {
     }
     // TODO: Implementar obtención de datos del usuario desde el token o API
     return { name: 'Admin' };
+  }
+
+  // Método para actualizar el estado de autenticación manualmente
+  setAuthenticationState(isAuthenticated: boolean): void {
+    this.isAuthenticatedSubject.next(isAuthenticated);
   }
 
   private setToken(token: string): void {

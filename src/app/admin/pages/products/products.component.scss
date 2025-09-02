@@ -30,7 +30,7 @@
   }
 
   .create-button {
-    background: #28a745;
+    background: #FF6B6B;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -44,9 +44,9 @@
     gap: 8px;
 
     &:hover {
-      background: #218838;
+      background: #ff5252;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
     }
   }
 }

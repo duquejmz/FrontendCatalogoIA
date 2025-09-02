@@ -5,7 +5,10 @@
 }
 
 .list-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: url('/assets/rectangle.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
   padding: 60px 20px;
   text-align: center;

@@ -1,9 +1,14 @@
 <div class="admin-product-form">
-  <div class="form-header">
-    <h2>{{ isEditing ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
-  </div>
-
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+    <div class="form-header-inline">
+      <div class="header-content">
+        <h2>{{ isEditing ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+        <p>{{ isEditing ? 'Modifica la información del producto' : 'Completa los datos del nuevo producto' }}</p>
+      </div>
+      <button type="button" class="back-button" (click)="onCancel()">
+        ← Volver a productos
+      </button>
+    </div>
     <div class="form-grid">
       <div class="form-group">
         <label for="sku">SKU *</label>

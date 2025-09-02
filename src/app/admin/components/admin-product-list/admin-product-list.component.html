@@ -1,10 +1,4 @@
 <div class="admin-product-list">
-  <div class="list-header">
-    <h2>Gestión de Productos</h2>
-    <button class="btn-primary" routerLink="/admin/products/new">
-      Nuevo Producto
-    </button>
-  </div>
 
   <div class="loading-state" *ngIf="loading">
     <p>Cargando productos...</p>
@@ -40,11 +34,15 @@
             </span>
           </td>
           <td class="actions">
-            <button class="btn-edit" (click)="onEdit(product)">Editar</button>
-            <button class="btn-toggle" (click)="onToggle(product)">
-              {{ product.isActive ? 'Desactivar' : 'Activar' }}
+            <button class="btn-edit" (click)="onEdit(product)" title="Editar">
+              <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button class="btn-delete" (click)="onDelete(product)">Eliminar</button>
+            <button class="btn-toggle" (click)="onToggle(product)" [title]="product.isActive ? 'Desactivar' : 'Activar'">
+              <i class="fa-regular fa-moon"></i>
+            </button>
+            <button class="btn-delete" (click)="onDelete(product)" title="Eliminar">
+              <i class="fa-solid fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>

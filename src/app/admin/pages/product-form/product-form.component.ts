@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product, CategoryNode } from '../../../contracts';
-import { MockDataService } from '../../../shared/services/mock-data.service';
+import { ProductsService } from '../../../core/services/products.service';
+import { CategoriesService } from '../../../core/services/categories.service';
+// import { MockDataService } from '../../../shared/services/mock-data.service';
 import { AdminProductFormComponent } from '../../components/admin-product-form/admin-product-form.component';
 
 @Component({
@@ -24,7 +26,9 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private mockDataService: MockDataService
+    private productsService: ProductsService,
+    private categoriesService: CategoriesService
+    // private mockDataService: MockDataService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +48,11 @@ export class ProductFormComponent implements OnInit {
   }
 
   private loadCategories(): void {
-    this.mockDataService.getAdminCategories().subscribe({
+    // Backend connection (active)
+    this.categoriesService.getAdminCategories().subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getAdminCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
       },
@@ -58,7 +66,11 @@ export class ProductFormComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    this.mockDataService.getProductById(id).subscribe({
+    // Backend connection (active)
+    this.productsService.get(id).subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getProductById(id).subscribe({
       next: (product) => {
         if (product) {
           this.product = product;
@@ -98,7 +110,15 @@ export class ProductFormComponent implements OnInit {
       id: this.isEditMode ? this.productId! : undefined
     };
 
-    this.mockDataService.saveProduct(productToSave).subscribe({
+    // Backend connection (active)
+    const saveObservable = this.isEditMode 
+      ? this.productsService.update(this.productId!, productToSave)
+      : this.productsService.create(productToSave as Omit<Product, 'id' | 'createdAt'>);
+
+    saveObservable.subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.saveProduct(productToSave).subscribe({
       next: (savedProduct) => {
         this.isLoading = false;
         // Navigate back to products list

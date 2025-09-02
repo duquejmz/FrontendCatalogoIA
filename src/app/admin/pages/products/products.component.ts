@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Product, PagedResult } from '../../../contracts';
-import { MockDataService } from '../../../shared/services/mock-data.service';
+import { ProductsService } from '../../../core/services/products.service';
+// import { MockDataService } from '../../../shared/services/mock-data.service';
 import { AdminProductListComponent } from '../../components/admin-product-list/admin-product-list.component';
 
 @Component({
@@ -24,7 +25,8 @@ export class ProductsComponent implements OnInit {
   totalPages = 0;
 
   constructor(
-    private mockDataService: MockDataService,
+    private productsService: ProductsService,
+    // private mockDataService: MockDataService,
     private router: Router
   ) {}
 
@@ -37,7 +39,11 @@ export class ProductsComponent implements OnInit {
     this.error = null;
 
     // Load all products for admin (no filters)
-    this.mockDataService.getProducts(this.currentPage, this.pageSize).subscribe({
+    // Backend connection (active)
+    this.productsService.list(this.currentPage, this.pageSize).subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.getProducts(this.currentPage, this.pageSize).subscribe({
       next: (result: PagedResult<Product>) => {
         this.products = result.items;
         this.totalItems = result.total;
@@ -57,7 +63,11 @@ export class ProductsComponent implements OnInit {
   }
 
   onToggleProduct(product: Product): void {
-    this.mockDataService.toggleProduct(product.id).subscribe({
+    // Backend connection (active)
+    this.productsService.toggle(product.id).subscribe({
+    
+    // Mock connection (commented - uncomment to use mock)
+    // this.mockDataService.toggleProduct(product.id).subscribe({
       next: (updatedProduct) => {
         // Update the product in the list
         const index = this.products.findIndex(p => p.id === product.id);

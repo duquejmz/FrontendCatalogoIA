@@ -8,8 +8,8 @@ import { environment } from '../../../environment';
   providedIn: 'root'
 })
 export class CategoriesService {
-  private readonly adminUrl = `${environment.apiBaseUrl}/api/v1/admin/categories`;
-  private readonly publicUrl = `${environment.apiBaseUrl}/api/v1/categories`;
+  private readonly adminUrl = `${environment.apiBaseUrl}/admin/categories`;
+  private readonly publicUrl = `${environment.apiBaseUrl}/categories`;
 
   constructor(private http: HttpClient) {}
 
