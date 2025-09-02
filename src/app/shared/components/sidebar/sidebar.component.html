@@ -1,0 +1,69 @@
+<aside class="app-sidebar" [class.collapsed]="isCollapsed">
+  <!-- Toggle button -->
+  <div class="sidebar-header">
+    <button class="toggle-btn" (click)="toggleSidebar()" [attr.aria-label]="isCollapsed ? 'Expandir menú' : 'Contraer menú'">
+      <i class="fas" [class.fa-bars]="isCollapsed" [class.fa-times]="!isCollapsed"></i>
+    </button>
+    <span class="sidebar-title" *ngIf="!isCollapsed">Navegación</span>
+  </div>
+
+  <!-- Navigation menu -->
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li *ngFor="let item of filteredMenuItems" class="nav-item">
+        <!-- Item with children -->
+        <div *ngIf="item.children && item.children.length > 0; else singleItem" class="nav-group">
+          <button 
+            class="nav-link group-toggle"
+            (click)="toggleExpanded(item.label)"
+            [class.expanded]="isExpanded(item.label)"
+            [attr.aria-expanded]="isExpanded(item.label)"
+          >
+            <i [class]="item.icon" class="nav-icon"></i>
+            <span class="nav-text" *ngIf="!isCollapsed">{{ item.label }}</span>
+            <i class="fas fa-chevron-down expand-icon" *ngIf="!isCollapsed"></i>
+          </button>
+          
+          <ul class="sub-nav" *ngIf="isExpanded(item.label) && !isCollapsed" [@slideDown]>
+            <li *ngFor="let child of item.children" class="sub-nav-item">
+              <a 
+                [routerLink]="child.route" 
+                routerLinkActive="active"
+                class="sub-nav-link"
+                (click)="navigateTo(child.route!)"
+              >
+                <i [class]="child.icon" class="nav-icon"></i>
+                <span class="nav-text">{{ child.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Single item -->
+        <ng-template #singleItem>
+          <a 
+            [routerLink]="item.route" 
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: item.route === '/'}"
+            class="nav-link"
+            (click)="navigateTo(item.route!)"
+          >
+            <i [class]="item.icon" class="nav-icon"></i>
+            <span class="nav-text" *ngIf="!isCollapsed">{{ item.label }}</span>
+          </a>
+        </ng-template>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer info -->
+  <div class="sidebar-footer" *ngIf="!isCollapsed">
+    <div class="footer-info">
+      <i class="fas fa-info-circle"></i>
+      <span>CatalogoIA v1.0</span>
+    </div>
+  </div>
+</aside>
+
+<!-- Overlay for mobile -->
+<div class="sidebar-overlay" *ngIf="!isCollapsed" (click)="toggleSidebar()"></div>

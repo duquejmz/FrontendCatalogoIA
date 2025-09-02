@@ -13,10 +13,6 @@ export const routes: Routes = [
     path: 'catalog',
     children: [
       {
-        path: '',
-        loadComponent: () => import('./catalog/pages/home/home.component').then(c => c.HomeComponent)
-      },
-      {
         path: 'products',
         loadComponent: () => import('./catalog/pages/list/list.component').then(c => c.ListComponent)
       },

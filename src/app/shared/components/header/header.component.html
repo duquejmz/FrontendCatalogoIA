@@ -1,0 +1,52 @@
+<header class="app-header">
+  <div class="header-container">
+    <!-- Logo y nombre del sitio -->
+    <div class="header-brand">
+      <a routerLink="/" class="brand-link">
+        <i class="fas fa-robot brand-icon"></i>
+        <span class="brand-text">CatalogoIA</span>
+      </a>
+    </div>
+
+    <!-- Navegación principal -->
+    <nav class="header-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+        <i class="fas fa-home"></i>
+        Inicio
+      </a>
+      <a routerLink="/catalog/products" routerLinkActive="active" class="nav-link">
+        <i class="fas fa-th-large"></i>
+        Productos
+      </a>
+    </nav>
+
+    <!-- Área de usuario -->
+    <div class="header-user">
+      <div *ngIf="!isAuthenticated; else authenticatedUser" class="user-actions">
+        <button (click)="onLogin()" class="btn btn-login">
+          <i class="fas fa-sign-in-alt"></i>
+          Iniciar Sesión
+        </button>
+      </div>
+      
+      <ng-template #authenticatedUser>
+        <div class="user-menu">
+          <div class="user-info">
+            <i class="fas fa-user-circle user-avatar"></i>
+            <span class="user-name">{{ currentUser?.name || 'Admin' }}</span>
+          </div>
+          <div class="user-dropdown">
+            <button (click)="navigateToAdmin()" class="dropdown-item">
+              <i class="fas fa-cog"></i>
+              Panel Admin
+            </button>
+            <button (click)="onLogout()" class="dropdown-item logout">
+              <i class="fas fa-sign-out-alt"></i>
+              Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</header>
