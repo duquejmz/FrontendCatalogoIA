@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product, PagedResult } from '../../contracts';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environment';
 
 export interface CatalogFilters {
   categoryId?: number;

@@ -42,7 +42,7 @@ export class MockDataService {
       description: 'Tablet profesional con pantalla de 12 pulgadas, ideal para diseño y productividad.',
       price: 699.99,
       categoryId: 2,
-      isActive: false,
+      isActive: true,
       createdAt: '2024-01-25T09:15:00Z',
       images: [
         { id: 4, url: 'https://mac-center.com/cdn/shop/files/iPad_Pro_Wi-Fi_12-9_in_6th_generation_Space_Gray_PDP_Image_Position-1a__MXLA_85ca95b0-b538-45c0-9d0c-599a5cdf6292.jpg?v=1700284319&width=823', altText: 'Tablet Pro', sortOrder: 1 },
@@ -74,6 +74,71 @@ export class MockDataService {
       createdAt: '2024-02-05T11:20:00Z',
       images: [
         { id: 8, url: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR8eDBYogT2szibICloya7ZH1dXpvMldMH15G7HM8ktHUDoL8PPep0nekWcKperTO7dCVcAjJxRjIQ-bZ4-TzerNH-wF4jOtANGA_owI2LdPWmPi3KM9u3qgA', altText: 'Teclado Mecánico', sortOrder: 1 }
+      ]
+    },
+    {
+      id: 6,
+      sku: 'HEADSET-006',
+      name: 'Auriculares Gaming',
+      description: 'Auriculares gaming con sonido 7.1 surround, micrófono retráctil y iluminación RGB.',
+      price: 89.99,
+      categoryId: 3,
+      isActive: true,
+      createdAt: '2024-02-10T13:30:00Z',
+      images: [
+        { id: 9, url: 'https://images.unsplash.com/photo-1599669454699-248893623440?w=400', altText: 'Auriculares Gaming', sortOrder: 1 }
+      ]
+    },
+    {
+      id: 7,
+      sku: 'MONITOR-007',
+      name: 'Monitor 4K 27"',
+      description: 'Monitor 4K UHD de 27 pulgadas con tecnología IPS y frecuencia de 144Hz.',
+      price: 449.99,
+      categoryId: 1,
+      isActive: true,
+      createdAt: '2024-02-15T08:45:00Z',
+      images: [
+        { id: 10, url: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400', altText: 'Monitor 4K', sortOrder: 1 }
+      ]
+    },
+    {
+      id: 8,
+      sku: 'WEBCAM-008',
+      name: 'Cámara Web HD',
+      description: 'Cámara web Full HD 1080p con micrófono incorporado y enfoque automático.',
+      price: 59.99,
+      categoryId: 3,
+      isActive: true,
+      createdAt: '2024-02-20T15:15:00Z',
+      images: [
+        { id: 11, url: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400', altText: 'Cámara Web HD', sortOrder: 1 }
+      ]
+    },
+    {
+      id: 9,
+      sku: 'SPEAKER-009',
+      name: 'Altavoces Bluetooth',
+      description: 'Altavoces inalámbricos con tecnología Bluetooth 5.0 y batería de larga duración.',
+      price: 79.99,
+      categoryId: 3,
+      isActive: true,
+      createdAt: '2024-02-25T12:00:00Z',
+      images: [
+        { id: 12, url: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400', altText: 'Altavoces Bluetooth', sortOrder: 1 }
+      ]
+    },
+    {
+      id: 10,
+      sku: 'SMARTWATCH-010',
+      name: 'Reloj Inteligente',
+      description: 'Smartwatch con monitor de salud, GPS y resistencia al agua IP68.',
+      price: 199.99,
+      categoryId: 2,
+      isActive: true,
+      createdAt: '2024-03-01T09:30:00Z',
+      images: [
+        { id: 13, url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400', altText: 'Reloj Inteligente', sortOrder: 1 }
       ]
     }
   ];
@@ -111,7 +176,7 @@ export class MockDataService {
 
   // Simular productos destacados para Home
   getFeaturedProducts(): Observable<Product[]> {
-    const featured = this.mockProducts.filter(p => p.isActive).slice(0, 4);
+    const featured = this.mockProducts.filter(p => p.isActive).slice(0, 10);
     return of(featured).pipe(delay(500));
   }
 

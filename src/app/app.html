@@ -1,6 +1,7 @@
-<app-header></app-header>
-<app-sidebar></app-sidebar>
+<app-header *ngIf="showHeaderFooter"></app-header>
 
-<main class="main-content">
+<main class="main-content" [class.full-page]="!showHeaderFooter">
   <router-outlet />
 </main>
+
+<app-footer *ngIf="showHeaderFooter"></app-footer>

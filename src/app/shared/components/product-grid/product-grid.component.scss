@@ -15,6 +15,10 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
+  &.grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -61,7 +65,7 @@
   .product-price {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #2563eb;
+    color: #FF6B6B;
     margin: 0.5rem 0;
   }
 

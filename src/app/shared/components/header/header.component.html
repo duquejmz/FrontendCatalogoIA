@@ -1,41 +1,106 @@
 <header class="app-header">
   <div class="header-container">
-    <!-- Logo y nombre del sitio -->
+    <!-- Logo (izquierda) -->
     <div class="header-brand">
       <a routerLink="/" class="brand-link">
-        <i class="fas fa-robot brand-icon"></i>
-        <span class="brand-text">CatalogoIA</span>
+        <img src="assets/logo.png" alt="RootAI Logo" class="brand-icon">
       </a>
     </div>
 
-    <!-- Navegación principal -->
+    <!-- Navegación central -->
     <nav class="header-nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
-        <i class="fas fa-home"></i>
-        Inicio
+      <a 
+        routerLink="/" 
+        routerLinkActive="active" 
+        [routerLinkActiveOptions]="{exact: true}"
+        class="nav-link"
+      >
+        INICIO
       </a>
-      <a routerLink="/catalog/products" routerLinkActive="active" class="nav-link">
-        <i class="fas fa-th-large"></i>
-        Productos
-      </a>
+      
+      <div class="nav-dropdown">
+        <button 
+          class="nav-link dropdown-toggle"
+          (click)="toggleDropdown('Catálogo')"
+          [class.expanded]="isDropdownExpanded('Catálogo')"
+        >
+          CATÁLOGO
+          <i class="fas fa-chevron-down expand-icon"></i>
+        </button>
+        
+        <div class="dropdown-menu" *ngIf="isDropdownExpanded('Catálogo')">
+          <a 
+            routerLink="/catalog/products" 
+            routerLinkActive="active"
+            class="dropdown-item"
+            (click)="navigateTo('/catalog/products')"
+          >
+            Ver Productos
+          </a>
+          <a 
+            routerLink="/catalog/categories" 
+            routerLinkActive="active"
+            class="dropdown-item"
+            (click)="navigateTo('/catalog/categories')"
+          >
+            Categorías
+          </a>
+        </div>
+      </div>
+
+      <div *ngIf="isAuthenticated" class="nav-dropdown">
+        <button 
+          class="nav-link dropdown-toggle"
+          (click)="toggleDropdown('Admin')"
+          [class.expanded]="isDropdownExpanded('Admin')"
+        >
+          ADMIN
+          <i class="fas fa-chevron-down expand-icon"></i>
+        </button>
+        
+        <div class="dropdown-menu" *ngIf="isDropdownExpanded('Admin')">
+          <a 
+            routerLink="/admin/products" 
+            routerLinkActive="active"
+            class="dropdown-item"
+            (click)="navigateTo('/admin/products')"
+          >
+            Productos
+          </a>
+          <a 
+            routerLink="/admin/categories" 
+            routerLinkActive="active"
+            class="dropdown-item"
+            (click)="navigateTo('/admin/categories')"
+          >
+            Categorías
+          </a>
+          <a 
+            routerLink="/admin/products/new" 
+            routerLinkActive="active"
+            class="dropdown-item"
+            (click)="navigateTo('/admin/products/new')"
+          >
+            Nuevo Producto
+          </a>
+        </div>
+      </div>
     </nav>
 
-    <!-- Área de usuario -->
+    <!-- Login/User (derecha) -->
     <div class="header-user">
       <div *ngIf="!isAuthenticated; else authenticatedUser" class="user-actions">
-        <button (click)="onLogin()" class="btn btn-login">
-          <i class="fas fa-sign-in-alt"></i>
-          Iniciar Sesión
+        <button (click)="onLogin()" class="btn-login">
+          <i class="fas fa-user"></i>
         </button>
       </div>
       
       <ng-template #authenticatedUser>
         <div class="user-menu">
-          <div class="user-info">
+          <button class="user-info" (click)="toggleDropdown('UserMenu')">
             <i class="fas fa-user-circle user-avatar"></i>
-            <span class="user-name">{{ currentUser?.name || 'Admin' }}</span>
-          </div>
-          <div class="user-dropdown">
+          </button>
+          <div class="user-dropdown" *ngIf="isDropdownExpanded('UserMenu')">
             <button (click)="navigateToAdmin()" class="dropdown-item">
               <i class="fas fa-cog"></i>
               Panel Admin

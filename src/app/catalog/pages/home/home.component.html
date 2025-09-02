@@ -1,39 +1,67 @@
 <div class="home-container">
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-content">
-      <h1>Bienvenido al Catálogo IA</h1>
-      <p>Descubre los mejores productos tecnológicos con la mejor calidad y precios</p>
-      <a routerLink="/products" class="cta-button">Ver Catálogo Completo</a>
-    </div>
-  </section>
+    <!-- Hero Section con Carrusel -->
+    <section class="hero-section">
+      <div class="hero-carousel">
+        <div class="slide" *ngFor="let slide of slides; let i = index" [class.active]="i === currentSlide">
+          <img [src]="slide" [alt]="'Slide ' + (i + 1)" loading="eager" />
+        </div>
 
-  <!-- Featured Products Section -->
-  <section class="featured-section">
-    <h2>Productos Destacados</h2>
-    
-    <!-- Loading State -->
-    <div *ngIf="isLoading" class="loading-state">
-      <div class="loading-spinner"></div>
-      <p>Cargando productos destacados...</p>
-    </div>
+        <button class="nav prev" (click)="prevSlide()" aria-label="Anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav next" (click)="nextSlide()" aria-label="Siguiente">
+          <i class="fas fa-chevron-right"></i>
+        </button>
 
-    <!-- Error State -->
-    <div *ngIf="error && !isLoading" class="error-state">
-      <p>{{ error }}</p>
-      <button (click)="loadFeaturedProducts()" class="retry-button">Reintentar</button>
-    </div>
+        <div class="indicators" role="tablist">
+          <button
+            *ngFor="let _ of slides; let i = index"
+            class="dot"
+            [class.active]="i === currentSlide"
+            (click)="goToSlide(i)"
+            [attr.aria-selected]="i === currentSlide"
+            [attr.aria-label]="'Ir al slide ' + (i + 1)"></button>
+        </div>
+      </div>
 
-    <!-- Products Grid -->
-    <app-product-grid 
-      *ngIf="!isLoading && !error && featuredProducts.length > 0"
-      [products]="featuredProducts"
-      [columns]="4">
-    </app-product-grid>
+      <div class="hero-content">
+        <h1>Bienvenido al Catálogo IA</h1>
+        <p>Descubre los mejores productos tecnológicos con la mejor calidad y precios</p>
+        <a routerLink="/catalog/products" class="cta-button">Ver Catálogo Completo</a>
+      </div>
+    </section>
 
-    <!-- Empty State -->
-    <div *ngIf="!isLoading && !error && featuredProducts.length === 0" class="empty-state">
-      <p>No hay productos destacados disponibles</p>
-    </div>
-  </section>
+    <!-- Featured Products Section -->
+    <section class="featured-section">
+      <div class="featured-background">
+        <h2>Productos Destacados</h2>
+      </div>
+    </section>
+
+    <!-- Products Grid Container -->
+    <section class="products-container">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Cargando productos destacados...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error && !isLoading" class="error-state">
+        <p>{{ error }}</p>
+        <button (click)="loadFeaturedProducts()" class="retry-button">Reintentar</button>
+      </div>
+
+      <!-- Products Grid -->
+      <app-product-grid 
+        *ngIf="!isLoading && !error && featuredProducts.length > 0"
+        [products]="featuredProducts"
+        [columns]="5">
+      </app-product-grid>
+
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && !error && featuredProducts.length === 0" class="empty-state">
+        <p>No hay productos destacados disponibles</p>
+      </div>
+    </section>
 </div>
